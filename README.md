@@ -62,6 +62,10 @@ jornada, que pertence a uma persona, que responde a um objetivo de negócio.
 | 5 | Testes e validação | [PDF](docs/entregas/Trocai_Entrega5_Objetivo5.pdf) |
 | 6 | Documento consolidado e pitch | [PDF](docs/entregas/Trocai_Entrega6_Objetivo6.pdf) |
 
+A Entrega 4 é o código deste repositório — a pasta [`api/`](api/). O PDF
+correspondente documenta a arquitetura, os 32 endpoints e as decisões técnicas
+por trás deles.
+
 ### Atividades da Lean Inception
 
 Registro de cada atividade do workshop, em [`docs/lean-inception/`](docs/lean-inception/):
@@ -89,21 +93,33 @@ Quadro colaborativo da equipe no FigJam:
 
 ## Código
 
-A pasta [`api/`](api/) traz os serviços de domínio da economia de Elos:
-custódia, transferência com livro-razão imutável e a máquina de estados da troca.
+A pasta [`api/`](api/) traz a implementação do núcleo do produto: autenticação
+com aprovação pelo síndico, catálogo de habilidades com busca, ciclo de vida da
+troca, carteira de Elos com custódia e livro-razão imutável, chat da troca,
+avaliação, moderação e o painel do síndico. São 32 endpoints, o esquema do
+PostgreSQL em migrações versionadas e os testes que verificam a regra.
+
+O [README da API](api/README.md) detalha endpoints, códigos de resposta e as
+decisões técnicas.
 
 ```bash
 cd api
 npm install
-npm test
+npm test               # 76 testes
+npm run demonstracao   # percorre uma troca inteira, sem precisar de banco
 ```
+
+`npm run demonstracao` sobe a API sobre o banco em memória e executa o fluxo
+completo — cadastro, aprovação, busca, pedido, aceite, chat, dupla confirmação,
+extrato, auditoria e avaliação —, imprimindo o que acontece com os saldos a
+cada passo. É a forma mais rápida de ver o produto funcionando.
 
 ### Resultado da última execução
 
 ```
-Test Suites: 2 passed, 2 total
-Tests:       42 passed, 42 total
-Cobertura:   92,09% instruções · 73,77% ramos · 97,77% funções · 95,23% linhas
+Test Suites: 4 passed, 4 total
+Tests:       76 passed, 76 total
+Cobertura:   90,52% instruções · 78,29% ramos · 97,50% funções · 92,27% linhas
 ```
 
 O banco usado nos testes é uma implementação em memória que reproduz o
@@ -161,10 +177,20 @@ não vem do morador. Vender assinatura ao condomínio é possível, mas cada con
 depende de aprovação em assembleia. A alternativa avaliada é integrar-se como
 módulo de uma plataforma de gestão condominial já existente.
 
-**Escopo técnico.** Ficaram para ondas futuras a custódia de créditos, o chat em
-tempo real, as notificações push e a Árvore de Talentos em sua forma visual
-completa. Nos quatro casos a versão simples entrega a maior parte do valor com
-risco técnico muito menor.
+**Escopo técnico.** Ficaram para ondas futuras o chat em tempo real, as
+notificações push e a Árvore de Talentos em sua forma visual completa. Nos três
+casos a versão simples entrega a maior parte do valor com risco técnico muito
+menor.
+
+**Uma decisão do sequenciador foi revista na implementação.** A retenção de
+créditos em custódia havia sido empurrada para uma onda futura, com o argumento
+de que protegia um caso de borda raro em um piloto de 38 usuários. Ao escrever a
+transferência ficou claro que o adiamento não economizava nada: garantir que o
+mesmo crédito não fosse prometido a duas trocas exigia travar as linhas e manter
+o lançamento duplo de qualquer forma, que é o grosso do trabalho da custódia. Ela
+entrou na Onda 1 e está implementada — a divergência fica registrada aqui em vez
+de corrigida no documento do sequenciador, que é o registro do que o time decidiu
+naquela sessão.
 
 ---
 

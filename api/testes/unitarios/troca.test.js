@@ -1,6 +1,6 @@
-const { TrocaService, STATUS } = require('../src/servicos/troca');
-const { CarteiraService } = require('../src/servicos/carteira');
-const { cenario } = require('./bancoFake');
+const { TrocaService, STATUS } = require('../../src/servicos/troca');
+const { CarteiraService } = require('../../src/servicos/carteira');
+const { cenario } = require('../bancoFake');
 
 const servico = (db) => new TrocaService(db, new CarteiraService());
 

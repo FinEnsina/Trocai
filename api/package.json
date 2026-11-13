@@ -1,12 +1,39 @@
 {
   "name": "trocai-api",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "API do Trocaí — troca de habilidades entre moradores de condomínios",
+  "main": "src/servidor.js",
   "scripts": {
-    "test": "jest --coverage"
+    "start": "node src/servidor.js",
+    "dev": "node --watch src/servidor.js",
+    "migrar": "node src/db/migrar.js",
+    "test": "jest --coverage",
+    "test:unitarios": "jest testes/unitarios",
+    "test:integracao": "jest testes/integracao",
+    "demonstracao": "node scripts/demonstracao.js"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/servidor.js",
+      "!src/db/**",
+      "!src/repositorios/**"
+    ],
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ]
   },
   "license": "MIT",
   "dependencies": {
-    "jest": "^30.5.2"
+    "bcryptjs": "^3.0.3",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1"
+  },
+  "devDependencies": {
+    "jest": "^30.5.2",
+    "supertest": "^7.3.2"
   }
 }

@@ -1,6 +1,6 @@
-const { CarteiraService, PARAMETROS } = require('../src/servicos/carteira');
-const { RegraDeNegocio } = require('../src/erros');
-const { cenario } = require('./bancoFake');
+const { CarteiraService, PARAMETROS } = require('../../src/servicos/carteira');
+const { RegraDeNegocio } = require('../../src/erros');
+const { cenario } = require('../bancoFake');
 
 describe('CarteiraService — conversão de duração em Elos (RN01)', () => {
   test('30 minutos valem 1 Elo', () => {
