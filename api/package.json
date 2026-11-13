@@ -1,0 +1,12 @@
+{
+  "name": "trocai-api",
+  "version": "0.1.0",
+  "description": "API do Trocaí — troca de habilidades entre moradores de condomínios",
+  "scripts": {
+    "test": "jest --coverage"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jest": "^30.5.2"
+  }
+}
