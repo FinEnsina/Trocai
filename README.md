@@ -6,6 +6,10 @@ virtuais e sem dinheiro envolvido.
 Projeto acadêmico do curso de **Desenvolvimento de Software Multiplataforma** da
 **Fatec Osasco Prefeito Hirant Sanazar** — 6º semestre, 2026.
 
+O código-fonte está em [`api/`](api/) · a documentação das entregas, em
+[`docs/entregas/`](docs/entregas/) · o registro do workshop, em
+[`docs/lean-inception/`](docs/lean-inception/).
+
 ---
 
 ## O problema
@@ -53,18 +57,22 @@ jornada, que pertence a uma persona, que responde a um objetivo de negócio.
 
 ### Entregas
 
-| # | Objetivo | Documento |
-|---|---|---|
-| 1 | Histórias de usuário e casos de uso | [PDF](docs/entregas/Trocai_Entrega1_Objetivo1.pdf) |
-| 2 | Protótipo e UX/UI | [PDF](docs/entregas/Trocai_Entrega2_Objetivo2.pdf) |
-| 3 | Estrutura do banco de dados | [PDF](docs/entregas/Trocai_Entrega3_Objetivo3.pdf) |
-| 4 | Implementação | [PDF](docs/entregas/Trocai_Entrega4_Objetivo4.pdf) |
-| 5 | Testes e validação | [PDF](docs/entregas/Trocai_Entrega5_Objetivo5.pdf) |
-| 6 | Documento consolidado e pitch | [PDF](docs/entregas/Trocai_Entrega6_Objetivo6.pdf) |
+Cada entrega tem o documento que a descreve e o artefato que ela produziu. A
+Entrega 4 é o código em si.
 
-A Entrega 4 é o código deste repositório — a pasta [`api/`](api/). O PDF
-correspondente documenta a arquitetura, os 32 endpoints e as decisões técnicas
-por trás deles.
+| # | Objetivo | Documento | Artefato no repositório |
+|---|---|---|---|
+| 1 | Histórias de usuário e casos de uso | [PDF](docs/entregas/Trocai_Entrega1_Objetivo1.pdf) | [Diagrama de casos de uso](docs/diagramas/uc.png) |
+| 2 | Protótipo e UX/UI | [PDF](docs/entregas/Trocai_Entrega2_Objetivo2.pdf) | [Telas](docs/diagramas/telas1.png) · [Navegação](docs/diagramas/nav.png) |
+| 3 | Estrutura do banco de dados | [PDF](docs/entregas/Trocai_Entrega3_Objetivo3.pdf) | [Migrações SQL](api/src/db/migracoes/) · [MER](docs/diagramas/mer.png) |
+| 4 | **Implementação** | [PDF](docs/entregas/Trocai_Entrega4_Objetivo4.pdf) | **[Código-fonte da API](api/src/)** |
+| 5 | Testes e validação | [PDF](docs/entregas/Trocai_Entrega5_Objetivo5.pdf) | [Suíte de testes](api/testes/) |
+| 6 | Documento consolidado e pitch | [PDF](docs/entregas/Trocai_Entrega6_Objetivo6.pdf) | este repositório |
+
+O PDF da Entrega 4 documenta a arquitetura, os 32 endpoints e as decisões
+técnicas por trás deles; o código que ele descreve está em
+[`api/`](api/), com as instruções de execução no
+[README da API](api/README.md).
 
 ### Atividades da Lean Inception
 
