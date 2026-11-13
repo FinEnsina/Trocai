@@ -112,10 +112,6 @@ A primeira e a segunda são as mais relevantes: elas atacam o problema de liquid
 
 ---
 
-## Como preencher no board
+## Como ficou montado no board
 
-1. Traga para o topo da coluna as oportunidades verdes das três jornadas.
-2. Abaixo delas, monte o "Banco de Funcionalidades" com post-its azuis.
-3. Escreva uma funcionalidade por post-it, sempre começando por verbo.
-4. Agrupe por afinidade e nomeie cada cluster com os oito módulos acima.
-5. Mantenha as ideias divergentes num canto separado, marcadas para a Atividade 7.
+As oportunidades verdes das três jornadas ocupam o topo da coluna. Abaixo delas fica o Banco de Funcionalidades, em post-its azuis, com uma funcionalidade por nota, sempre começando por verbo. As notas foram agrupadas por afinidade e cada cluster recebeu o nome de um dos oito módulos acima. As ideias divergentes ficaram num canto separado, marcadas para a Atividade 7.

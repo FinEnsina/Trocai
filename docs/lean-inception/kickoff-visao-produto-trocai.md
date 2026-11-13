@@ -110,7 +110,15 @@ Existe, portanto, um recurso ocioso e invisível dentro do condomínio: o conhec
 | UX/UI | Protótipos de baixa e alta fidelidade, identidade visual |
 | QA / DevOps | Testes, CI/CD, ambiente de homologação |
 
-> Preencher com os nomes reais da equipe antes da entrega.
+A equipe tem três integrantes, então cada um acumula mais de um dos papéis acima ao longo das sprints:
+
+| Integrante | RA |
+|---|---|
+| Jefferson de Padua Coelho Ribeiro | 2161392413009 |
+| Karine Fernandes e Silva | 2161392413030 |
+| Sarah Quinteiro Limeira da Silva | 2161392413027 |
+
+Orientação: Professor Elias Carneiro de Oliveira.
 
 ## 1.7 Premissas e restrições
 
@@ -401,9 +409,9 @@ Ao clicar em uma folha vermelha, o síndico vê quantos moradores pediram aquilo
 
 ---
 
-## Anexo A — Como transportar para o template do Mural/Canva
+## Anexo A — Visão do produto no formato do template
 
-O template exigido na atividade tem sete lacunas. Use exatamente o conteúdo da seção 2.1 nesta ordem:
+O template da atividade tem sete lacunas. A frase consolidada da seção 2.1 preenche cada uma assim:
 
 1. **Para:** moradores de condomínios residenciais e o síndico
 2. **cujo:** problema é não conseguir identificar, acessar e retribuir de forma justa as habilidades que existem no próprio prédio
@@ -413,21 +421,11 @@ O template exigido na atividade tem sete lacunas. Use exatamente o conteúdo da 
 6. **diferentemente do:** grupo de WhatsApp do condomínio e dos marketplaces de serviços pagos
 7. **O nosso produto:** funciona em rede fechada e verificada, sem dinheiro real, equilibra as trocas por créditos e mostra ao síndico quais habilidades faltam na comunidade
 
-No quadro do Mural, registre também as três rodadas da dinâmica (um grupo por conjunto de lacunas) antes da frase consolidada — a atividade valoriza o processo colaborativo, não apenas o resultado.
+As três rodadas da dinâmica, uma por integrante, estão registradas no board antes da frase consolidada: a atividade valoriza o processo colaborativo, e não apenas o resultado.
 
-## Anexo B — Checklist da entrega
+## Anexo B — Correspondência entre este documento e o board
 
-- [ ] Frase da visão do produto consolidada e homogênea
-- [ ] Template preenchido no Mural ou Canva, com link público de visualização
-- [ ] Registro fotográfico ou print da dinâmica em grupo
-- [ ] Nomes e papéis da equipe preenchidos na seção 1.6
-- [ ] Documento publicado (GitHub Pages, PDF ou link do Canva) e postado na atividade
-
----
-
-## Anexo C — Transposição para o board Lean Inception (Mural)
-
-### C.1 Onde cada entrega já feita se encaixa no board
+### B.1 Onde cada seção deste documento aparece no board do FigJam
 
 | Coluna do board | Conteúdo deste documento |
 |---|---|
@@ -438,17 +436,17 @@ No quadro do Mural, registre também as três rodadas da dinâmica (um grupo por
 | Atividade 4: Personas | Seção 2.3 |
 | Atividade 5: Jornada do Usuário | Seção 2.4 |
 | Atividade 6: Brainstorming de Funcionalidades | Seções 2.5 e 2.6 |
-| Atividade 7: Revisão Técnica, de Negócio e UX | A fazer — usar a matriz de esforço/valor sobre as funcionalidades |
+| Atividade 7: Revisão Técnica, de Negócio e UX | Documento próprio: revisao-tecnica-negocio-ux-trocai.md |
 | Atividade 8: Sequenciador | Seção 2.10 |
 | Atividade 9: Canvas MVP | Seção 2.9 |
 
-### C.2 Convenção de cores do template
+### B.2 Convenção de cores do board
 
-Cada grupo da dinâmica usa uma cor fixa de post-it em todas as atividades: **grupo 1 = rosa, grupo 2 = azul, grupo 3 = verde**. Amarelo fica reservado para as atividades de brainstorm individual. A cor identifica quem escreveu, não o tema — o agrupamento por afinidade (passo 4) é feito pela posição das notas dentro do quadrante, aproximando as afins.
+Cada integrante da equipe usa uma cor fixa de post-it em todas as atividades: **integrante 1 = rosa, integrante 2 = azul, integrante 3 = verde**. Amarelo fica reservado para as atividades de brainstorm individual. A cor identifica quem escreveu, não o tema: o agrupamento por afinidade é feito pela posição das notas dentro do quadrante, aproximando as afins.
 
-### C.3 Post-its do quadrante ENFN (máximo por quadrante)
+### B.3 Post-its do quadrante ENFN (máximo por quadrante)
 
-O grid 2×2 do template comporta cerca de 6 a 8 notas por quadrante. Seleção prioritária:
+O grid 2×2 do board comporta cerca de 6 a 8 notas por quadrante. Seleção prioritária:
 
 **É** (superior esquerdo)
 `App mobile + painel web` · `Rede fechada do condomínio` · `Economia colaborativa` · `Créditos virtuais (Elos)` · `Catálogo de talentos do prédio` · `Gratuito` · `Voluntário`
