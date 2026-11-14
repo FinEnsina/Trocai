@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trocaí — o que você acha deste aplicativo?</title>
+<meta name="description" content="Pesquisa de validação do Trocaí, aplicativo de troca de habilidades entre vizinhos. Projeto acadêmico da Fatec Osasco.">
+<style>
+  :root {
+    --verde: #0F6E56;
+    --verde-claro: #1D9E75;
+    --ambar: #8A5510;
+    --ambar-fundo: #FAEEDA;
+    --tinta: #22211F;
+    --tinta-fraca: #55534E;
+    --fundo: #F4F2EC;
+    --papel: #FFFFFF;
+    --borda: #D3D1C7;
+    --borda-forte: #A9A69A;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    padding: 0 16px 64px;
+    background: var(--fundo);
+    color: var(--tinta);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  .folha { max-width: 560px; margin: 0 auto; }
+
+  header {
+    padding: 28px 0 18px;
+  }
+  .marca {
+    font-size: 15px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--verde);
+  }
+  h1 { font-size: 26px; line-height: 1.25; margin: 10px 0 0; }
+  h2 { font-size: 21px; line-height: 1.3; margin: 0 0 6px; }
+
+  .barra {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--fundo);
+    padding: 10px 0 12px;
+    margin: 0 -16px; padding-left: 16px; padding-right: 16px;
+  }
+  .barra .trilho { height: 6px; background: var(--borda); border-radius: 3px; overflow: hidden; }
+  .barra .preenchido { height: 100%; width: 0; background: var(--verde-claro); transition: width .3s ease; }
+  .barra .passo { font-size: 13px; color: var(--tinta-fraca); margin-top: 6px; }
+
+  section { display: none; }
+  section.ativa { display: block; }
+
+  .cartao {
+    background: var(--papel);
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    padding: 18px;
+    margin: 0 0 18px;
+  }
+
+  .aviso {
+    background: var(--ambar-fundo);
+    border: 1px solid #E2C58C;
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-size: 15px;
+    color: #4A3209;
+  }
+
+  .tela-img {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    margin: 0 auto 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 14px rgba(0,0,0,.12);
+  }
+
+  fieldset { border: 0; margin: 0 0 22px; padding: 0; }
+  legend { font-weight: 700; font-size: 17px; padding: 0 0 10px; line-height: 1.4; }
+  .ajuda { font-size: 15px; color: var(--tinta-fraca); margin: -4px 0 12px; }
+
+  label.opcao {
+    display: flex; align-items: flex-start; gap: 12px;
+    min-height: 48px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    background: var(--papel);
+    border: 1.5px solid var(--borda);
+    border-radius: 11px;
+    cursor: pointer;
+  }
+  label.opcao:has(input:checked) {
+    border-color: var(--verde-claro);
+    background: #EAF6F1;
+  }
+  label.opcao input { margin: 3px 0 0; width: 20px; height: 20px; accent-color: var(--verde); flex: none; }
+
+  .escala { display: flex; gap: 6px; }
+  .escala label {
+    flex: 1; text-align: center;
+    min-height: 52px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--papel);
+    border: 1.5px solid var(--borda);
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .escala label:has(input:checked) { border-color: var(--verde-claro); background: #EAF6F1; color: var(--verde); }
+  .escala input { position: absolute; opacity: 0; width: 0; height: 0; }
+  /* O rádio da escala fica invisível, então o foco do teclado precisa aparecer no rótulo. */
+  .escala label:has(input:focus-visible),
+  label.opcao:has(input:focus-visible) { outline: 3px solid var(--verde); outline-offset: 2px; }
+  .extremos { display: flex; justify-content: space-between; font-size: 13px; color: var(--tinta-fraca); margin-top: 6px; }
+
+  textarea {
+    width: 100%; min-height: 96px; padding: 12px;
+    font: inherit; font-size: 16px;
+    border: 1.5px solid var(--borda); border-radius: 11px;
+    background: var(--papel); color: var(--tinta);
+    resize: vertical;
+  }
+
+  button {
+    font: inherit; font-weight: 700; font-size: 17px;
+    min-height: 52px; padding: 14px 20px;
+    border-radius: 11px; border: 0; cursor: pointer;
+    width: 100%;
+  }
+  .principal { background: var(--verde); color: #fff; }
+  .secundario { background: transparent; color: var(--verde); border: 1.5px solid var(--verde); margin-top: 10px; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+
+  .erro {
+    display: none;
+    background: #FBEAEA; border: 1px solid #E0A5A5; color: #7A1F1F;
+    border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; font-size: 15px;
+  }
+  .erro.visivel { display: block; }
+
+  .resposta-caixa {
+    background: var(--papel); border: 1px solid var(--borda); border-radius: 11px;
+    padding: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 13px; white-space: pre-wrap; word-break: break-word;
+    max-height: 220px; overflow: auto; color: var(--tinta-fraca);
+  }
+
+  footer {
+    margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--borda);
+    font-size: 14px; color: var(--tinta-fraca);
+  }
+  a { color: var(--verde); }
+</style>
+</head>
+<body>
+<div class="folha">
+
+  <div class="barra" id="barra" hidden>
+    <div class="trilho"><div class="preenchido" id="preenchido"></div></div>
+    <div class="passo" id="passo"></div>
+  </div>
+
+  <!-- ====================================================== abertura -->
+  <section class="ativa" id="s0">
+    <header>
+      <div class="marca">Trocaí</div>
+      <h1>O que você acha deste aplicativo?</h1>
+    </header>
+
+    <div class="cartao">
+      <p>O <strong>Trocaí</strong> é um aplicativo em que vizinhos de um mesmo prédio trocam serviços
+      e habilidades entre si, <strong>sem dinheiro envolvido</strong>. Quem ajuda ganha créditos,
+      chamados Elos. Quem pede ajuda gasta.</p>
+
+      <p>Somos alunos do curso de Desenvolvimento de Software Multiplataforma da
+      Fatec Osasco Prefeito Hirant Sanazar. Precisamos descobrir uma coisa só:
+      <strong>se o aplicativo se explica sozinho</strong>.</p>
+
+      <p>Você vai ver seis telas e dizer o que entendeu de cada uma. Leva cerca de 8 minutos.</p>
+
+      <p><strong>Não existe resposta errada.</strong> Se alguma tela não ficar clara, o problema é
+      nosso — e descobrir isso é exatamente o motivo da pesquisa.</p>
+    </div>
+
+    <div class="cartao">
+      <h2>Sobre seus dados</h2>
+      <p>Não pedimos nome, telefone nem e-mail. As respostas entram no trabalho em forma de
+      números e comentários agrupados, sem identificar quem respondeu, e são usadas só nele.</p>
+      <p>No final a página monta um texto com suas respostas para você enviar.
+      <strong>Se enviar pelo WhatsApp, quem receber verá seu número</strong>, como em qualquer
+      mensagem — ele não é anotado em lugar nenhum do trabalho. Se preferir, copie o texto e
+      envie do jeito que quiser.</p>
+      <p>Você pode fechar a página e parar a qualquer momento.</p>
+    </div>
+
+    <button class="principal" data-ir="s1">Começar</button>
+  </section>
+
+  <!-- ====================================================== perfil -->
+  <section id="s1" data-titulo="Sobre você">
+    <header><h2>Sobre você</h2></header>
+    <div class="erro" id="erro-s1">Responda todas as perguntas para continuar.</div>
+
+    <fieldset>
+      <legend>Qual a sua faixa de idade?</legend>
+      <label class="opcao"><input type="radio" name="idade" value="ate29"><span>Até 29 anos</span></label>
+      <label class="opcao"><input type="radio" name="idade" value="30a44"><span>De 30 a 44 anos</span></label>
+      <label class="opcao"><input type="radio" name="idade" value="45a59"><span>De 45 a 59 anos</span></label>
+      <label class="opcao"><input type="radio" name="idade" value="60mais"><span>60 anos ou mais</span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Como você usa o celular no dia a dia?</legend>
+      <label class="opcao"><input type="radio" name="uso" value="basico"><span>Praticamente só para mensagens e chamadas</span></label>
+      <label class="opcao"><input type="radio" name="uso" value="medio"><span>Mensagens, chamadas e alguns aplicativos</span></label>
+      <label class="opcao"><input type="radio" name="uso" value="avancado"><span>Uso vários aplicativos sem dificuldade</span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>Você mora em prédio ou condomínio?</legend>
+      <label class="opcao"><input type="radio" name="condominio" value="sim"><span>Sim</span></label>
+      <label class="opcao"><input type="radio" name="condominio" value="nao"><span>Não</span></label>
+    </fieldset>
+
+    <button class="principal" data-ir="tela0">Continuar</button>
+  </section>
+
+  <!-- ====================================================== telas (geradas) -->
+  <div id="telas"></div>
+
+  <!-- ====================================================== SUS -->
+  <section id="sus" data-titulo="Impressão geral">
+    <header>
+      <h2>Impressão geral</h2>
+      <p class="ajuda">Dez frases sobre o aplicativo como um todo, pensando nas telas que você
+      acabou de ver. Responda rápido, sem pensar muito: a primeira impressão é a que vale.</p>
+    </header>
+    <div class="erro" id="erro-sus">Falta responder alguma frase.</div>
+    <div id="sus-itens"></div>
+    <button class="principal" data-ir="final">Continuar</button>
+  </section>
+
+  <!-- ====================================================== finais -->
+  <section id="final" data-titulo="Para terminar">
+    <header><h2>Para terminar</h2></header>
+    <div class="erro" id="erro-final">Responda a primeira pergunta para continuar.</div>
+
+    <fieldset>
+      <legend>Você usaria um aplicativo assim no seu prédio?</legend>
+      <label class="opcao"><input type="radio" name="usaria" value="sim"><span>Sim</span></label>
+      <label class="opcao"><input type="radio" name="usaria" value="talvez"><span>Talvez</span></label>
+      <label class="opcao"><input type="radio" name="usaria" value="nao"><span>Não</span></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>O que te deixaria em dúvida ou te impediria de usar?</legend>
+      <p class="ajuda">Escreva do jeito que pensou. É a resposta que mais ajuda a gente.</p>
+      <textarea name="duvida" rows="4"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>Teve alguma tela ou palavra que você não entendeu?</legend>
+      <textarea name="confuso" rows="3"></textarea>
+    </fieldset>
+
+    <fieldset>
+      <legend>O que você mudaria no aplicativo?</legend>
+      <textarea name="mudaria" rows="3"></textarea>
+    </fieldset>
+
+    <button class="principal" data-ir="envio">Ver minhas respostas</button>
+  </section>
+
+  <!-- ====================================================== envio -->
+  <section id="envio" data-titulo="Enviar">
+    <header><h2>Pronto — falta só enviar</h2></header>
+
+    <div class="aviso">
+      A página não guarda nada sozinha. Toque em <strong>Enviar pelo WhatsApp</strong> e escolha
+      a conversa de quem te mandou a pesquisa. Se preferir, copie o texto e mande do seu jeito.
+    </div>
+
+    <div style="margin:18px 0">
+      <button class="principal" id="whats">Enviar pelo WhatsApp</button>
+      <button class="secundario" id="copiar">Copiar as respostas</button>
+    </div>
+
+    <p class="ajuda">O texto abaixo é o que será enviado:</p>
+    <div class="resposta-caixa" id="previa"></div>
+
+    <footer>
+      Obrigada por responder. Projeto Trocaí — Desenvolvimento de Software Multiplataforma,
+      Fatec Osasco Prefeito Hirant Sanazar, 2026.
+    </footer>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var TELAS = [
+    {
+      id: 'T1', arquivo: 't1_inicio.png', titulo: 'A primeira tela do aplicativo',
+      perguntas: [
+        { nome: 'T1a', texto: 'Nesta tela aparece "12 Elos". O que você entende que isso significa?',
+          opcoes: [
+            ['a', 'É um valor em dinheiro que eu poderia sacar'],
+            ['b', 'São créditos que eu ganho ajudando vizinhos e gasto quando peço ajuda'],
+            ['c', 'É a quantidade de vizinhos que já me ajudaram'],
+            ['x', 'Não consigo dizer o que significa']
+          ] },
+        { nome: 'T1b', texto: 'Você quer encontrar alguém do prédio que conserte seu computador. Onde tocaria?',
+          opcoes: [
+            ['a', 'No botão "Buscar ajuda"'],
+            ['b', 'No botão "Ofertar algo"'],
+            ['c', 'No aviso do síndico'],
+            ['x', 'Não saberia por onde começar']
+          ] }
+      ]
+    },
+    {
+      id: 'T2', arquivo: 't2_busca.png', titulo: 'Procurando ajuda no prédio',
+      perguntas: [
+        { nome: 'T2a', texto: 'O que esta tela está mostrando?',
+          opcoes: [
+            ['a', 'Vizinhos que sabem consertar computador, e quanto custa chamar cada um'],
+            ['b', 'Lojas de assistência técnica perto do prédio'],
+            ['c', 'As pessoas que moram no mesmo andar que eu'],
+            ['x', 'Não consigo dizer']
+          ] }
+      ]
+    },
+    {
+      id: 'T3', arquivo: 't3_solicitar.png', titulo: 'Pedindo a troca',
+      perguntas: [
+        { nome: 'T3a', texto: 'Se você enviar este pedido, o que acontece com os seus Elos?',
+          opcoes: [
+            ['a', 'Vou gastar 2 Elos e meu saldo fica em 10'],
+            ['b', 'Não gasto nada agora, só se eu gostar do serviço'],
+            ['c', 'Vou receber 2 Elos por ter pedido'],
+            ['x', 'Não consigo dizer']
+          ] }
+      ]
+    },
+    {
+      id: 'T4', arquivo: 't4_detalhe.png', titulo: 'Depois que o vizinho aceitou',
+      perguntas: [
+        { nome: 'T4a', texto: 'A tela diz "Aguardando sua confirmação". O que isso quer dizer?',
+          opcoes: [
+            ['a', 'O serviço foi feito e preciso confirmar para os créditos irem ao vizinho'],
+            ['b', 'O vizinho ainda está decidindo se aceita me ajudar'],
+            ['c', 'O aplicativo está carregando alguma coisa'],
+            ['x', 'Não consigo dizer']
+          ] }
+      ]
+    },
+    {
+      id: 'T5', arquivo: 't5_chat.png', titulo: 'Combinando o encontro',
+      perguntas: [
+        { nome: 'T5a', texto: 'Para que serve esta tela?',
+          opcoes: [
+            ['a', 'Para combinar com o vizinho o dia e a hora do serviço'],
+            ['b', 'Para avaliar o vizinho depois do serviço'],
+            ['c', 'Para pagar o vizinho'],
+            ['x', 'Não consigo dizer']
+          ] }
+      ]
+    },
+    {
+      id: 'T6', arquivo: 't6_carteira.png', titulo: 'Sua carteira',
+      perguntas: [
+        { nome: 'T6a', texto: 'Aparece "Boas-vindas · +3 Elos". O que isso quer dizer?',
+          opcoes: [
+            ['a', 'Ganhei 3 Elos ao ser aprovado, para poder pedir ajuda antes de ajudar alguém'],
+            ['b', 'Recebi 3 Elos de um vizinho que me deu as boas-vindas'],
+            ['c', 'Preciso pagar 3 Elos para entrar'],
+            ['x', 'Não consigo dizer']
+          ] }
+      ]
+    }
+  ];
+
+  var SUS = [
+    'Eu usaria este aplicativo com frequência no meu prédio',
+    'O aplicativo me pareceu mais complicado do que precisava ser',
+    'O aplicativo me pareceu fácil de usar',
+    'Eu precisaria da ajuda de alguém para conseguir usar este aplicativo',
+    'As partes do aplicativo me pareceram bem encaixadas umas nas outras',
+    'Achei que havia coisas demais fora do lugar neste aplicativo',
+    'A maioria das pessoas aprenderia a usar isto rapidamente',
+    'O aplicativo me pareceu travado e trabalhoso de usar',
+    'Eu me senti seguro usando o aplicativo',
+    'Eu precisaria aprender muita coisa antes de conseguir usar isto'
+  ];
+
+  var IMG = '../docs/diagramas/';
+
+  function el(tag, attrs, filhos) {
+    var n = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === 'class') n.className = attrs[k];
+      else if (k === 'texto') n.textContent = attrs[k];
+      else n.setAttribute(k, attrs[k]);
+    }
+    (filhos || []).forEach(function (f) { n.appendChild(f); });
+    return n;
+  }
+
+  function blocoRadio(nome, texto, opcoes) {
+    var fs = el('fieldset');
+    fs.appendChild(el('legend', { texto: texto }));
+    opcoes.forEach(function (o) {
+      var inp = el('input', { type: 'radio', name: nome, value: o[0] });
+      var lab = el('label', { class: 'opcao' }, [inp, el('span', { texto: o[1] })]);
+      fs.appendChild(lab);
+    });
+    return fs;
+  }
+
+  function blocoEscala(nome, texto) {
+    var fs = el('fieldset');
+    fs.appendChild(el('legend', { texto: texto }));
+    var linha = el('div', { class: 'escala' });
+    for (var v = 1; v <= 5; v++) {
+      var inp = el('input', { type: 'radio', name: nome, value: String(v) });
+      linha.appendChild(el('label', {}, [inp, el('span', { texto: String(v) })]));
+    }
+    fs.appendChild(linha);
+    var ext = el('div', { class: 'extremos' });
+    ext.appendChild(el('span', { texto: 'Discordo totalmente' }));
+    ext.appendChild(el('span', { texto: 'Concordo totalmente' }));
+    fs.appendChild(ext);
+    return fs;
+  }
+
+  // ---- monta as seções das telas
+  var container = document.getElementById('telas');
+  TELAS.forEach(function (t, i) {
+    var sec = el('section', { id: 'tela' + i, 'data-titulo': 'Tela ' + (i + 1) + ' de 6' });
+    var cab = el('header');
+    cab.appendChild(el('h2', { texto: t.titulo }));
+    cab.appendChild(el('p', { class: 'ajuda',
+      texto: 'Olhe com calma antes de responder. Se não entender, marque "não consigo dizer": para nós é uma resposta tão útil quanto as outras.' }));
+    sec.appendChild(cab);
+    sec.appendChild(el('div', { class: 'erro', id: 'erro-tela' + i, texto: 'Responda todas as perguntas para continuar.' }));
+
+    var img = el('img', { class: 'tela-img', src: IMG + t.arquivo, alt: 'Tela do aplicativo: ' + t.titulo, loading: 'lazy' });
+    sec.appendChild(img);
+
+    t.perguntas.forEach(function (p) { sec.appendChild(blocoRadio(p.nome, p.texto, p.opcoes)); });
+
+    var fac = el('fieldset');
+    fac.appendChild(el('legend', { texto: 'O quanto esta tela foi fácil de entender?' }));
+    var linha = el('div', { class: 'escala' });
+    for (var v = 1; v <= 5; v++) {
+      var inp = el('input', { type: 'radio', name: t.id + 'f', value: String(v) });
+      linha.appendChild(el('label', {}, [inp, el('span', { texto: String(v) })]));
+    }
+    fac.appendChild(linha);
+    var ext = el('div', { class: 'extremos' });
+    ext.appendChild(el('span', { texto: 'Muito difícil' }));
+    ext.appendChild(el('span', { texto: 'Muito fácil' }));
+    fac.appendChild(ext);
+    sec.appendChild(fac);
+
+    var destino = (i === TELAS.length - 1) ? 'sus' : 'tela' + (i + 1);
+    var bt = el('button', { class: 'principal', 'data-ir': destino, texto: 'Continuar' });
+    sec.appendChild(bt);
+    container.appendChild(sec);
+  });
+
+  // ---- monta o SUS
+  var susItens = document.getElementById('sus-itens');
+  SUS.forEach(function (frase, i) {
+    susItens.appendChild(blocoEscala('sus' + (i + 1), (i + 1) + '. ' + frase));
+  });
+
+  // ---- navegação
+  var ORDEM = ['s0', 's1'].concat(TELAS.map(function (_, i) { return 'tela' + i; }), ['sus', 'final', 'envio']);
+  var barra = document.getElementById('barra');
+  var preenchido = document.getElementById('preenchido');
+  var passo = document.getElementById('passo');
+
+  function obrigatorios(sec) {
+    var nomes = {}, faltando = false;
+    sec.querySelectorAll('input[type=radio]').forEach(function (i) { nomes[i.name] = nomes[i.name] || false; });
+    sec.querySelectorAll('input[type=radio]:checked').forEach(function (i) { nomes[i.name] = true; });
+    for (var n in nomes) if (!nomes[n]) faltando = true;
+    return !faltando;
+  }
+
+  function mostrar(id) {
+    document.querySelectorAll('section').forEach(function (s) { s.classList.remove('ativa'); });
+    var alvo = document.getElementById(id);
+    alvo.classList.add('ativa');
+    window.scrollTo(0, 0);
+
+    var idx = ORDEM.indexOf(id);
+    if (idx > 0 && id !== 'envio') {
+      barra.hidden = false;
+      preenchido.style.width = Math.round((idx / (ORDEM.length - 1)) * 100) + '%';
+      passo.textContent = (alvo.getAttribute('data-titulo') || '') + ' · ' + idx + ' de ' + (ORDEM.length - 2);
+    } else {
+      barra.hidden = true;
+    }
+    if (id === 'envio') montarTexto();
+  }
+
+  document.addEventListener('click', function (ev) {
+    var bt = ev.target.closest('[data-ir]');
+    if (!bt) return;
+    var sec = bt.closest('section');
+    var erro = sec.querySelector('.erro');
+    if (sec.id !== 's0' && !obrigatorios(sec)) {
+      if (erro) { erro.classList.add('visivel'); erro.scrollIntoView({ block: 'center' }); }
+      return;
+    }
+    if (erro) erro.classList.remove('visivel');
+    mostrar(bt.getAttribute('data-ir'));
+  });
+
+  // ---- monta o texto da resposta
+  function v(nome) {
+    var m = document.querySelector('input[name="' + nome + '"]:checked');
+    return m ? m.value : '-';
+  }
+  function t(nome) {
+    var c = document.querySelector('[name="' + nome + '"]');
+    return c && c.value.trim() ? c.value.trim().replace(/\s+/g, ' ') : '-';
+  }
+
+  var texto = '';
+
+  function montarTexto() {
+    var L = [];
+    L.push('TROCAI-RESPOSTA');
+    L.push('perfil: idade=' + v('idade') + ' uso=' + v('uso') + ' condominio=' + v('condominio'));
+    TELAS.forEach(function (tela) {
+      var partes = tela.perguntas.map(function (p) { return p.nome + '=' + v(p.nome); });
+      partes.push('facil=' + v(tela.id + 'f'));
+      L.push(tela.id + ': ' + partes.join(' '));
+    });
+    var notas = [];
+    for (var i = 1; i <= 10; i++) notas.push(v('sus' + i));
+    L.push('sus: ' + notas.join(','));
+    L.push('usaria: ' + v('usaria'));
+    L.push('duvida: ' + t('duvida'));
+    L.push('confuso: ' + t('confuso'));
+    L.push('mudaria: ' + t('mudaria'));
+    texto = L.join('\n');
+    document.getElementById('previa').textContent = texto;
+  }
+
+  document.getElementById('whats').addEventListener('click', function () {
+    window.open('https://wa.me/?text=' + encodeURIComponent(texto), '_blank');
+  });
+
+  document.getElementById('copiar').addEventListener('click', function () {
+    var bt = this;
+    function avisar() { bt.textContent = 'Copiado'; setTimeout(function () { bt.textContent = 'Copiar as respostas'; }, 2000); }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(texto).then(avisar, selecionar);
+    } else { selecionar(); }
+  });
+
+  function selecionar() {
+    var caixa = document.getElementById('previa');
+    var faixa = document.createRange();
+    faixa.selectNodeContents(caixa);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(faixa);
+  }
+})();
+</script>
+</body>
+</html>

@@ -74,6 +74,13 @@ técnicas por trás deles; o código que ele descreve está em
 [`api/`](api/), com as instruções de execução no
 [README da API](api/README.md).
 
+### Pesquisa de validação
+
+A página em [`pesquisa/`](pesquisa/) apresenta as seis telas da Onda 1 a moradores
+e registra o que cada um entendeu de cada tela, mais a escala SUS. É o
+instrumento da validação remota descrita na Entrega 5. Publicada pelo GitHub
+Pages, abre em qualquer celular sem instalação nem cadastro.
+
 ### Atividades da Lean Inception
 
 Registro de cada atividade do workshop, em [`docs/lean-inception/`](docs/lean-inception/):
